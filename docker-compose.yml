@@ -5,9 +5,9 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - ./services/app:/root/foms
+      - ./services/app:/home/appuser/foms
     environment:
-      UV_CACHE_DIR: /root/foms/.uv-cache
+      UV_CACHE_DIR: /home/appuser/foms/.uv-cache
       FLASK_RUN_HOST: 0.0.0.0
       PG_IP: ${PG_IP}
       PG_PORT: ${PG_PORT}

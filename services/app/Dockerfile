@@ -1,10 +1,20 @@
-FROM debian:latest
-
-ENV PATH="$PATH:/root/.local/bin"
+FROM debian:bookworm-slim
 
 RUN apt update && apt install -y curl ca-certificates
 
-RUN mkdir -p /root/foms/static/js
-WORKDIR /root/foms
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g ${GID} appuser && useradd -m -u ${UID} -g ${GID} appuser
 
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh && test -x /root/.local/bin/uv
+USER appuser
+ENV HOME=/home/appuser
+
+RUN mkdir /home/appuser/foms
+
+WORKDIR $HOME/foms
+
+ENV PATH="$PATH:$HOME/.local/bin"
+
+RUN mkdir -p static/js
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && test -x "$HOME/.local/bin/uv"
