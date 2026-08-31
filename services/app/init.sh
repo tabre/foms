@@ -1,7 +1,7 @@
 #!/bin/bash
 
 foms_root="/root/foms"
-js_dir="static/js"
+js_dir="src/static/js"
 htmx_file="htmx.min.js"
 htmx_cdn_url="https://cdn.jsdelivr.net/npm/htmx.org@4.0.0/dist/htmx.min.js"
 
