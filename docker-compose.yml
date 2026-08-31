@@ -3,6 +3,9 @@ services:
     build:
       context: ./services/app
       dockerfile: Dockerfile
+      args:
+        UID: ${HOST_UID:-1000}
+        GID: ${HOST_GID:-1000}
     restart: unless-stopped
     volumes:
       - ./services/app:/home/appuser/foms
