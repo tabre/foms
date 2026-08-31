@@ -46,3 +46,9 @@ htmlcov/
 
 # Logs
 *.log
+
+# JS dependencies
+services/app/src/static/js/htmx.min.js
+
+# Custom scripts
+vim
