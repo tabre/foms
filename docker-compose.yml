@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PG_UN}
+      POSTGRES_PASSWORD: ${PG_PW}
+      POSTGRES_DB: ${PG_DB}
+    volumes:
+      - db:/var/lib/postgresql
+      - ./vol/db/pginit.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      v0:
+        ipv4_address: ${PG_IP}
+    ports:
+      - "${PG_PORT}:5432"
+
+  foms:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./:/root/foms
+    environment:
+      UV_CACHE_DIR: /root/foms/.uv-cache
+      FLASK_RUN_HOST: 0.0.0.0
+      PG_IP: ${PG_IP}
+      PG_PORT: ${PG_PORT}
+      PG_DB: ${PG_DB}
+      PG_UN: ${PG_UN}
+      PG_PW: ${PG_PW}
+    networks:
+      v0:
+        ipv4_address: ${FOMS_IP}
+    ports:
+      - "${FOMS_PORT}:5000"
+    depends_on:
+      - db
+    init: true
+    command: >
+      bash -c "
+      ./init.sh &&
+      exec uv run flask --app server run --debug
+      "
+
+volumes:
+  db:
+  foms:
+
+networks:
+  v0:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SUBNET}/24
+

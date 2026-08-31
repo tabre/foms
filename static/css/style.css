@@ -1,0 +1,71 @@
+:root {
+    --color-black: #0c0e10;
+    --color-white: #c5c8c6;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.arimo {
+  font-family: "Arimo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+    font-family: Arimo;
+    font-size: 1em;
+    color: var(--color-white);
+}
+
+body {
+    color: var(--color-white);
+    background-color: var(--color-black);
+    margin-left: 3em;
+}
+
+#hello-world {
+    font-size: 5em;
+}
+
+#world:hover {
+    cursor: pointer;
+}
+
+#rand {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#rand:hover {
+    cursor: pointer;
+}
+
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        #ff6b6b,
+        #feca57,
+        #48dbfb,
+        #ff6b6b
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: scroll-gradient 4s linear infinite;
+}
+
+@keyframes scroll-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 300% 50%;
+    }
+}

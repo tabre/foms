@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <script src="{{ url_for('static', filename='js/htmx.min.js') }}"></script>
+    <title>Hello</title>
+</head>
+
+<body>
+    <h1 id="hello-world">
+        Hello, 
+        <!-- Because this <span> element uses the hx-swap="outerHTML" attribute, -->
+        <!-- it will be replaced entirely by whatever is returned by the -->
+        <!-- endpoint specified by hx-get (/hx__htmx) when it is clicked -->
+        <span id="world" hx-swap="outerHTML" hx-get="/hx__htmx">{{ name }}!</span>
+    </h1>
+
+    <div id="rand" hx-swap="innerHTML" hx-get="/hx__rand">
+        Get random PostgreSQL number
+    </div>
+</body>
+
+</html>
