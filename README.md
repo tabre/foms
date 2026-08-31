@@ -1,7 +1,7 @@
 ## Filament & Order Management System (FOMS)
 
 ### Setup
-`git clone git@github.com:tabre/foms.git`\
+`git clone https://github.com/tabre/foms.git`\
 `cd foms`
 
 Create a new .env file in the project root and define the following variables within:
