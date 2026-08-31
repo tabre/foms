@@ -46,4 +46,8 @@ def hx__rand() -> str:
             random_range
         )
 
-    return str(result.scalar())
+    return f"""
+    <div id="rand" class="gradient-text" hx-swap="outerHTML" hx-get="/hx__rand">
+        {str(result.scalar())}
+    </div>
+    """
