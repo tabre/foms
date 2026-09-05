@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gui_examples.css') }}"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
     <script src="{{ url_for('static', filename='js/htmx.min.js') }}"></script>
     <title>Hello</title>
@@ -16,8 +17,25 @@
         <span id="world" hx-swap="outerHTML" hx-get="/hx__htmx">{{ name }}!</span>
     </h1>
 
-    <div id="rand" hx-swap="outerHTML" hx-get="/hx__rand">
+    <div id="rand" hx-swap="innerHTML" hx-get="/hx__rand">
         Get random PostgreSQL number
+    </div>
+    
+    <div id="req16">
+        <h2 class="req-header">REQ16 - Order Input</h2>
+        {% include "req16.html" %}
+    </div>
+    <div id="req17" class="req-header">
+        <h2 class="req-header">REQ17 - Add Filament</h2>
+        {% include "req17.html" %}
+    </div>
+    <div id="req18" class="req-header">
+        <h2 class="req-header">REQ18 - Low Stock Warning</h2>
+        {% include "req18.html" %}
+    </div>
+    <div id="req19" class="req-header">
+        <h2 class="req-header">REQ18 - Order Status</h2>
+        {% include "req19.html" %}
     </div>
 </body>
 
