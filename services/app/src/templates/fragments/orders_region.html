@@ -1,0 +1,52 @@
+{% if error %}<div class="banner banner-danger" role="alert">{{ error }}</div>{% endif %}
+
+<section class="panel" id="orders-region">
+    <h2>Open orders</h2>
+    {% if open_rows %}
+    <table class="table">
+        <thead><tr><th>Product</th><th>Quantity</th><th>Due date</th><th>Customer</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for o in open_rows %}
+            <tr>
+                <td>{{ o.product.name }}</td>
+                <td>{{ o.quantity|fmt_amount('product') }}</td>
+                <td>{{ o.due_date|fmt_date }}</td>
+                <td>{{ o.customer_name }}</td>
+                <td>{% if o.shortage() %}<span class="pill pill-warning">Not enough filament</span>{% endif %}</td>
+                <td class="actions">
+                    <button hx-post="/orders/{{ o.id }}/complete" hx-target="#orders-region">Mark complete</button>
+                    <button hx-delete="/orders/{{ o.id }}" hx-target="#orders-region">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No open orders.</p>
+    {% endif %}
+    {% with param='open_page', page=open_page, total=open_total, shown=open_rows|length, start=(open_page - 1) * page_size %}
+        {% include "fragments/pagination.html" %}
+    {% endwith %}
+
+    <h2>Completed orders</h2>
+    {% if done_rows %}
+    <table class="table">
+        <thead><tr><th>Product</th><th>Quantity</th><th>Completed</th><th>Status</th></tr></thead>
+        <tbody>
+            {% for o in done_rows %}
+            <tr>
+                <td>{{ o.product.name }}</td>
+                <td>{{ o.quantity|fmt_amount('product') }}</td>
+                <td><time class="local" datetime="{{ o.complete_date|utc_iso }}">{{ o.complete_date|fmt_timestamp }}</time></td>
+                <td><span class="pill pill-success">Completed {{ o.complete_date|fmt_timestamp }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No completed orders.</p>
+    {% endif %}
+    {% with param='done_page', page=done_page, total=done_total, shown=done_rows|length, start=(done_page - 1) * page_size %}
+        {% include "fragments/pagination.html" %}
+    {% endwith %}
+</section>

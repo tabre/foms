@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Add filament / product | FOMS{% endblock %}
+{% block heading %}Add filament / product{% endblock %}
+{% block content %}
+{% import "macros.html" as macros %}
+<div class="panel form-column">
+    <div class="combobox static-combobox" data-static='["Filament", "Premade product"]' data-name="kind" data-swap="/items/new">
+        <label class="required">Item type *</label>
+        <input class="combo-input" type="text" role="combobox" aria-expanded="false" data-name="kind" data-value="{{ kind }}" data-static='["Filament", "Premade product"]'/>
+        <ul class="combo-list" role="listbox"></ul>
+    </div>
+
+    <form class="form {% if kind != 'product' %}hidden{% endif %}" method="post" action="/products" id="product-fields">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="hidden" name="kind" value="product"/>
+        <label for="name" class="required">Name *</label>
+        <input id="name" name="name" maxlength="80" required/>
+        {% if errors.get("Name") %}<div class="field-error" role="alert">{{ errors["Name"] }}</div>{% endif %}
+        {{ macros.combobox("Default filament", "filament_id", "/options/filaments?style=table", required=True) }}
+        {% if errors.get("Default filament") %}<div class="field-error" role="alert">{{ errors["Default filament"] }}</div>{% endif %}
+        <label for="wpunit" class="required">Weight per unit (g) *</label>
+        <input id="wpunit" name="weight" type="number" step="0.1" min="0.1" required/>
+        {% if errors.get("Weight per unit (g)") %}<div class="field-error" role="alert">{{ errors["Weight per unit (g)"] }}</div>{% endif %}
+        <label for="stock">Starting stock (units)</label>
+        <input id="stock" name="stock" type="number" min="0" step="1" value="0"/>
+        <label for="pthreshold">Low-stock threshold (units)</label>
+        <input id="pthreshold" name="threshold" type="number" min="0" step="1" value="0"/>
+        <button type="submit" class="primary">Add to database</button>
+    </form>
+
+    <form class="form {% if kind != 'filament' %}hidden{% endif %}" method="post" action="/filaments" id="filament-fields">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="hidden" name="kind" value="filament"/>
+        {{ macros.combobox("Type", "type", "/options/filament-types?for=add", required=True) }}
+        {% if errors.get("Type") %}<div class="field-error" role="alert">{{ errors["Type"] }}</div>{% endif %}
+        <label for="brand">Brand</label>
+        <input id="brand" name="brand" maxlength="60"/>
+        <label for="modifier">Modifier</label>
+        <input id="modifier" name="modifier" maxlength="40"/>
+        <label for="color" class="required">Color *</label>
+        <input id="color" name="color" maxlength="40" required/>
+        {% if errors.get("Color") %}<div class="field-error" role="alert">{{ errors["Color"] }}</div>{% endif %}
+        <label for="weight">Starting weight (g)</label>
+        <input id="weight" name="weight" type="number" step="0.1" min="0" value="0"/>
+        <label for="fthreshold">Low-stock threshold (g)</label>
+        <input id="fthreshold" name="threshold" type="number" step="0.1" min="0" value="0"/>
+        <button type="submit" class="primary">Add to database</button>
+    </form>
+</div>
+{% endblock %}

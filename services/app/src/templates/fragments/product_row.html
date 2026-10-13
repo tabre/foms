@@ -1,0 +1,10 @@
+<tr class="row" id="row-p-{{ p.id }}">
+    <td>{{ p.name }}</td>
+    <td>{{ p.get_stock()|fmt_amount('product') }}</td>
+    <td>{% if p.is_low_stock() %}<span class="pill pill-warning">Low stock</span>{% endif %}</td>
+    <td class="actions">
+        <button hx-get="/stock/fragments/product/{{ p.id }}/adjust">Adjust</button>
+        <button hx-get="/stock/fragments/product/{{ p.id }}/edit">Edit</button>
+        <button hx-delete="/products/{{ p.id }}" hx-confirm="Delete {{ p.name }}? This cannot be undone." hx-target="#row-p-{{ p.id }}" hx-swap="outerHTML">Delete</button>
+    </td>
+</tr>

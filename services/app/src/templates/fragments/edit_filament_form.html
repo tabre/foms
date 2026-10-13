@@ -1,0 +1,18 @@
+{% import "macros.html" as macros %}
+<tr class="row" id="row-f-{{ f.id }}">
+    <td colspan="4">
+        <form class="inline-form" method="post" action="/filaments/{{ f.id }}" hx-target="#row-f-{{ f.id }}" hx-swap="outerHTML">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <label for="etype-{{ f.id }}">Type</label>
+            <input id="etype-{{ f.id }}" name="type" maxlength="40" value="{{ f.type }}" required/>
+            <label for="ecolor-{{ f.id }}">Color</label>
+            <input id="ecolor-{{ f.id }}" name="color" maxlength="40" value="{{ f.color }}" required/>
+            <label for="emod-{{ f.id }}">Modifier</label>
+            <input id="emod-{{ f.id }}" name="modifier" maxlength="40" value="{{ f.modifier or '' }}"/>
+            <label for="ethr-{{ f.id }}">Threshold (g)</label>
+            <input id="ethr-{{ f.id }}" name="threshold" type="number" step="0.1" min="0" value="{{ f.low_stock_threshold_g }}"/>
+            <button type="submit" class="primary">Save</button>
+            {% if error %}<div class="field-error" role="alert">{{ error }}</div>{% endif %}
+        </form>
+    </td>
+</tr>

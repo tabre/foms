@@ -1,0 +1,7 @@
+{% if total > page_size %}
+<nav class="pagination">
+    {% if page > 1 %}<a href="?{{ param }}={{ page - 1 }}">Previous</a>{% endif %}
+    <span>Showing {{ start + 1 }}–{{ start + shown }} of {{ total }}</span>
+    {% if page * page_size < total %}<a href="?{{ param }}={{ page + 1 }}">Next</a>{% endif %}
+</nav>
+{% endif %}

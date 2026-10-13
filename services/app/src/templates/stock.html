@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Current stock | FOMS{% endblock %}
+{% block heading %}Current stock{% endblock %}
+{% block content %}
+{% include "fragments/banners.html" %}
+
+<section class="panel">
+    <h2>Filament</h2>
+    {% if filaments %}
+    <table class="table">
+        <thead><tr><th>Type / color / modifier</th><th>Quantity</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for f in filaments %}
+            {% include "fragments/filament_row.html" %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No filament yet. <a href="/items/new?kind=filament">Add one</a></p>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h2>Premade product</h2>
+    {% if products %}
+    <table class="table">
+        <thead><tr><th>Product</th><th>Quantity</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for p in products %}
+            {% include "fragments/product_row.html" %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No premade product yet. <a href="/items/new?kind=product">Add one</a></p>
+    {% endif %}
+</section>
+
+<p><a class="button" href="/stock/filament">View specific filament</a></p>
+{% endblock %}

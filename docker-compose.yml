@@ -17,6 +17,7 @@ services:
       PG_DB: ${PG_DB}
       PG_UN: ${PG_UN}
       PG_PW: ${PG_PW}
+      FOMS_SECRET: ${FOMS_SECRET}
     networks:
       v0:
         ipv4_address: ${FOMS_IP}
@@ -29,7 +30,37 @@ services:
     command: >
       bash -c "
       ./init.sh &&
-      exec uv run flask --app src/server run --debug
+      exec uv run flask --app src.server run --debug
+      "
+
+  scheduler:
+    build:
+      context: ./services/app
+      dockerfile: Dockerfile
+      args:
+        UID: ${HOST_UID:-1000}
+        GID: ${HOST_GID:-1000}
+    restart: unless-stopped
+    volumes:
+      - ./services/app:/home/appuser/foms
+    environment:
+      UV_CACHE_DIR: /home/appuser/foms/.uv-cache
+      PG_IP: ${PG_IP}
+      PG_PORT: ${PG_PORT}
+      PG_DB: ${PG_DB}
+      PG_UN: ${PG_UN}
+      PG_PW: ${PG_PW}
+      FOMS_SECRET: ${FOMS_SECRET}
+    networks:
+      - v0
+    depends_on:
+      postgres:
+        condition: service_healthy
+    init: true
+    command: >
+      bash -c "
+      ./init.sh &&
+      exec uv run python -m src.scheduler
       "
 
   postgres:

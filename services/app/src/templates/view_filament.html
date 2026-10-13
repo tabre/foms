@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}View specific filament | FOMS{% endblock %}
+{% block heading %}View specific filament{% endblock %}
+{% block content %}
+{% import "macros.html" as macros %}
+{% if result is none %}
+<div class="panel">
+    <form class="form" action="/stock/filament/result" method="get">
+        {{ macros.combobox("Filament type", "type", "/options/filament-types", value=form_type, required=True) }}
+        {{ macros.combobox("Color", "color", "/options/colors", value=form_color, required=True, params="type=" + (form_type or ""), extra_class="dep-target", depends="type") }}
+        {{ macros.combobox("Modifier", "modifier", "/options/modifiers", value=form_modifier, params="type=" + (form_type or "") + "&color=" + (form_color or ""), extra_class="dep-target", depends="color") }}
+        <button type="submit" class="primary">View</button>
+    </form>
+</div>
+{% else %}
+{% if result %}
+    {% for f in result %}
+    <div class="panel result-card">
+        <h3>{{ f.table_name }}</h3>
+        {% if f.brand %}<p class="secondary">{{ f.brand }}</p>{% endif %}
+        <p class="big">{{ f.get_stock()|fmt_amount('filament') }} remaining</p>
+        {% if f.is_low_stock() %}
+        <span class="pill pill-warning">Below {{ f.get_threshold()|fmt_threshold('filament') }} threshold</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="banner banner-danger" role="alert">No matching filament found.</div>
+{% endif %}
+<p><a class="button" href="/stock/filament">Look up another</a></p>
+{% endif %}
+{% endblock %}

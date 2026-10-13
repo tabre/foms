@@ -1,0 +1,17 @@
+<tr class="row" id="row-{{ prefix }}-{{ id }}">
+    <td>{{ name }}</td>
+    <td colspan="3">
+        <form class="inline-form" method="post" action="/{{ kind }}s/{{ id }}/adjust" hx-target="#row-{{ prefix }}-{{ id }}" hx-swap="outerHTML">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <label for="dir-{{ prefix }}-{{ id }}">Direction</label>
+            <select id="dir-{{ prefix }}-{{ id }}" name="direction">
+                <option value="increase"{% if direction == 'increase' %} selected{% endif %}>Add</option>
+                <option value="decrease"{% if direction == 'decrease' %} selected{% endif %}>Remove</option>
+            </select>
+            <label for="amt-{{ prefix }}-{{ id}}">Amount</label>
+            <input id="amt-{{ prefix }}-{{ id }}" name="amount" type="number" step="0.1" min="0.1" value="{{ amount or '' }}" required/>
+            <button type="submit" class="primary">Apply</button>
+            {% if error %}<div class="field-error" role="alert">{{ error }}</div>{% endif %}
+        </form>
+    </td>
+</tr>

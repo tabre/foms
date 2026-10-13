@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Users | FOMS{% endblock %}
+{% block heading %}Users{% endblock %}
+{% block content %}
+<section class="panel">
+    <h2>Users</h2>
+    <table class="table">
+        <thead><tr><th>Username</th><th>Display name</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.username }}</td>
+                <td>{{ u.display() }}</td>
+                <td>{% if u.is_active %}<span class="pill pill-success">Active</span>{% else %}<span class="pill pill-danger">Inactive</span>{% endif %}</td>
+                <td class="actions">
+                    {% if u.is_active %}
+                    <form class="inline-form" method="post" action="/users/{{ u.id }}/deactivate">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit">Deactivate</button>
+                    </form>
+                    {% else %}
+                    <form class="inline-form" method="post" action="/users/{{ u.id }}/activate">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit">Reactivate</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="panel">
+    <h2>Add user</h2>
+    {% if error %}<div class="banner banner-danger" role="alert">{{ error }}</div>{% endif %}
+    <form class="form" method="post" action="/users">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label for="username" class="required">Username *</label>
+        <input id="username" name="username" required/>
+        <label for="password" class="required">Password *</label>
+        <input id="password" name="password" type="password" required/>
+        <button type="submit" class="primary">Add user</button>
+    </form>
+</section>
+
+<section class="panel" id="change-password">
+    <h2>Change my password</h2>
+    {% if pw_error %}<div class="banner banner-danger" role="alert">{{ pw_error }}</div>{% endif %}
+    <form class="form" method="post" action="/users/change-password">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <label for="current">Current password *</label>
+        <input id="current" name="current" type="password" required/>
+        <label for="new">New password *</label>
+        <input id="new" name="new" type="password" required/>
+        <label for="confirm">Confirm new password *</label>
+        <input id="confirm" name="confirm" type="password" required/>
+        <button type="submit" class="primary">Change password</button>
+    </form>
+</section>
+{% endblock %}

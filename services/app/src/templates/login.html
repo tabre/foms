@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Sign in | FOMS{% endblock %}
+{% block heading %}Sign in{% endblock %}
+{% block content %}
+{% if error %}<div class="banner banner-danger" role="alert">{{ error }}</div>{% endif %}
+<form method="post" class="form" action="/login">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <label for="username" class="required">Username *</label>
+    <input id="username" name="username" required/>
+    <label for="password" class="required">Password *</label>
+    <input id="password" name="password" type="password" required/>
+    <label class="checkbox"><input type="checkbox" name="remember"/> Keep me signed in</label>
+    <button type="submit" class="primary">Sign in</button>
+</form>
+{% endblock %}

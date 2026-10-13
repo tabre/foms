@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}New order | FOMS{% endblock %}
+{% block heading %}New order{% endblock %}
+{% block content %}
+{% import "macros.html" as macros %}
+<div class="panel form-column">
+    <form class="form" method="post" action="/orders" id="order-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+        {{ macros.combobox("Product", "product_id", "/options/products", value=form.product_id, required=True, extra_class="prefill-source") }}
+        <div class="field-info" id="product-info"></div>
+        {% if errors.get("Product") %}<div class="field-error" role="alert">{{ errors["Product"] }}</div>{% endif %}
+
+        {{ macros.combobox("Filament type", "type", "/options/filament-types", value=form.type, required=True, extra_class="prefill-target") }}
+        {{ macros.combobox("Color", "filament_id", "/options/filaments", value=form.filament_id, required=True, params="type=" + (form.type or ""), extra_class="prefill-target", depends="type") }}
+
+        <label for="quantity" class="required">Quantity *</label>
+        <input id="quantity" name="quantity" type="number" min="1" max="9999" value="{{ form.quantity or 1 }}" required
+               hx-get="/orders/new/warning" hx-trigger="change" hx-params="*" hx-target="#order-warning"/>
+        <div id="order-warning"></div>
+
+        <label for="due_date" class="required">Due date *</label>
+        <input id="due_date" name="due_date" type="date" value="{{ form.due_date or '' }}" required/>
+        {% if errors.get("Due date") %}<div class="field-error" role="alert">{{ errors["Due date"] }}</div>{% endif %}
+
+        <label for="first_name">Customer first name</label>
+        <input id="first_name" name="first_name" maxlength="60" value="{{ form.first_name or '' }}"/>
+        <label for="last_name">Customer last name</label>
+        <input id="last_name" name="last_name" maxlength="60" value="{{ form.last_name or '' }}"/>
+
+        <button type="submit" class="primary">Submit order</button>
+    </form>
+</div>
+{% endblock %}

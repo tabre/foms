@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <title>{% block title %}FOMS{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <script src="{{ url_for('static', filename='js/htmx.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/combobox.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+<main class="page">
+    <header class="page-header">
+        <h1>{% block heading %}{% endblock %}</h1>
+        <nav class="page-nav">
+            {% if not on_dashboard %}<a href="/">Back to dashboard</a>{% endif %}
+        </nav>
+        {% if user %}
+        <div class="account-menu">
+            <span class="account-name">{{ user.display() }}</span>
+            <a href="/users">Users</a>
+            <a href="/users#change-password">Change password</a>
+            <form method="post" action="/logout" class="inline-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button type="submit">Sign out</button>
+            </form>
+        </div>
+        {% endif %}
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash">
+            {% for category, message in messages %}
+            <div class="banner {{ 'banner-success' if category == 'success' else 'banner-danger' }}" role="status">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

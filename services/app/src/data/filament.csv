@@ -1,0 +1,84 @@
+brand,material,variant,color,quantity,reorder
+Elegoo,PLA,Basic,White,1100,500
+Elegoo,PLA,Basic,Purple,200,250
+Elegoo,PLA,Basic,Sky Blue,700,250
+Elegoo,PLA,Basic,Sea Green,700,250
+Elegoo,PLA,Basic,Wood,1100,250
+Elegoo,PLA,Basic,True Red,100,250
+Elegoo,PLA,Silk,Bronze,600,100
+Elegoo,PLA,Silk,Gold,1600,250
+Elegoo,PLA,Basic,Red,900,250
+Elegoo,PLA,Rapid+,Black,1400,None
+Elegoo,PLA,Transparent,Clear,800,100
+Elegoo,PLA,Silk,Silver,200,100
+Elegoo,PLA,Sparkle,Green,700,250
+Elegoo,PLA,Sparkle,Black,400,250
+Elegoo,PLA,Basic,Pink,900,250
+Elegoo,PLA,Galaxy,Black,800,100
+Elegaoo,PLA,Basic,Neon Green,300,250
+BambuLab,PLA,Basic,Yellow,600,Special
+BambuLab,PLA,Basic,Magenta,300,Special
+BambuLab,PLA,Basic,Cyan,800,Special
+Inland,PLA,Basic,Silver,500,250
+Inland,PLA,Plus,Bone White,800,None
+Inland,PLA,Glow,Rainbow,600,None
+Inland,PLA,Plus,Black,200,None
+Inland,PLA,Basic,Black,2200,1000
+Inland,PLA,Tough,Denim,100,100
+Inland,PLA ,Basic,Orange,600,250
+Inland,PLA,Matte,Denim,300,100
+Inland,PLA,Matte,Peach,600,100
+Inland,PLA,Basic,Brown,500,250
+Inland,PLA,Plus,Gold,100,None
+Inland,PLA,Matte,Pink,400,100
+Inland,PLA,Basic,White,2300,1000
+Inland,PLA,Basic,Green,1300,250
+Inland,PLA,Basic,Blue,1500,250
+Inland,PLA,Matte,Mint Green,300,100
+Inland,PLA,Basic,Red,700,250
+Inland,PLA,Basic,Grey,300,250
+Inland,PLA,Basic,Marble,800,250
+Inland,PLA,Matte,Rainbow,300,250
+Inland,PLA,Transparent,Watermelon,1000,None
+PolyTerra,PLA,Dual,Black/Red,100,100
+PolyTerra,PLA,Dual,Sunrise,800,100
+PolyTerra,PLA,Dual,Glacier,900,100
+PolyTerra,PLA,Dual,Chameleon,900,100
+Make Market,PLA,Matte,Black,400,None
+Ziro,PLA,TriMatte,Neon,500,250
+Ziro,PLA,TriMatte,Rosy Cloud,800,250
+FlashForge,PLA,Glow,Green,100,250
+FlashForge,PLA,Glow,Blue,700,250
+SUNLU,PLA,Transparent,Green,200,100
+SUNLU,PLA,Silk,Copper,800,100
+Generic,PLA,Dual,Blue/Green,250,None
+Generic,PLA,Transparent,Galactic,900,None
+Generic,PLA,Dual,Blue/Silver,250,None
+Generic,PLA,Silk,Copper,250,None
+Generic,PLA,Silk,Gold,250,None
+Generic,PLA,Silk,Black,250,None
+Generic,PLA,Silk,Silver,250,None
+Generic,PLA,Silk,Bronze,250,None
+Generic,PLA,Dual,Red/Brown,250,None
+Amolen,PLA,Silk,Gradient,300,100
+Overture,PLA,Basic,Black,1000,None
+Monoprice,PLA,Basic,Blue,1000,None
+MonoPrice,PLA,Basic,Red,1000,None
+Hatchbox,PLA,Basic,Orange,100,None
+ESUN,PLA,Plus,Bone White,600,100
+Elegoo,PETG,Basic,Green,400,100
+Elegoo,PETG,Basic,Red,800,100
+Elegoo,PETG,Basic,Grey,500,100
+Elegoo,PETG,Basic,Blue,700,100
+Elegoo,PETG,Basic,Black,1100,100
+Inland,PETG,Transparent,Purple,700,None
+Inland,PETG,Transpartent,Yellow,600,None
+Inland,PETG,Basic,White,500,100
+Inland,ABS,Basic,Black,200,100
+Inland,ABS,Basic,Red,600,100
+Inland,ABS,Basic,White,300,100
+Inland,ASA,Basic,Black,500,100
+Inland,TPU,Basic,Black,100,100
+Inland,TPU,Transparent,Rainbow,600,100
+Inland,TPU,Transparent,Purple,600,100
+Amolen,TPU,Glow,Blue,100,100

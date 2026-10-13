@@ -1,0 +1,17 @@
+{% macro field_errors(field) %}
+{% if errors and errors.get(field) %}
+<div class="field-error" id="err-{{ field }}" role="alert">{{ errors[field] }}</div>
+{% endif %}
+{% endmacro %}
+
+{% macro combobox(label, name, url, value="", required=False, params="", extra_class="", depends="") %}
+<div class="combobox {{ extra_class }}" data-url="{{ url }}" data-params="{{ params }}" {% if depends %}data-depends="{{ depends }}"{% endif %}>
+    <label for="cb-{{ name }}"{% if required %} class="required"{% endif %}>{{ label }}{% if required %} *{% endif %}</label>
+    <input id="cb-{{ name }}" class="combo-input" type="text" autocomplete="off"
+           role="combobox" aria-expanded="false" aria-controls="list-{{ name }}"
+           data-name="{{ name }}" data-value="{{ value }}"
+           {% if required %}data-required="1"{% endif %}/>
+    <input type="hidden" name="{{ name }}" value="{{ value }}"/>
+    <ul class="combo-list" id="list-{{ name }}" role="listbox" aria-live="polite"></ul>
+</div>
+{% endmacro %}

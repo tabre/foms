@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}FOMS dashboard{% endblock %}
+{% block heading %}FOMS dashboard{% endblock %}
+{% block content %}
+{% include "fragments/banners.html" %}
+<div class="menu">
+    <a class="menu-button" href="/orders/new">New order</a>
+    <a class="menu-button" href="/stock">Check stock</a>
+    <a class="menu-button" href="/orders">Orders</a>
+    <a class="menu-button" href="/items/new">Add filament / product</a>
+</div>
+{% endblock %}

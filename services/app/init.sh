@@ -16,3 +16,4 @@ if [[ ! -f "${js_dir}/${htmx_file}" ]]; then
 fi
 
 uv sync
+uv run alembic upgrade head

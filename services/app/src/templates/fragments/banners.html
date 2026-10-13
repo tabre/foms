@@ -1,0 +1,22 @@
+{% if alerts %}
+<div class="banners" id="banners">
+    {% if alerts|length > 5 %}
+    <details class="banner banner-warning">
+        <summary>{{ alerts|length }} items are low on stock</summary>
+        {% for a in alerts %}
+        <div class="banner-line">
+            <strong>Low stock: {{ a.item.banner_name if a.kind == 'filament' else a.item.name }}</strong>
+            <div class="banner-sub">{{ a.item.get_stock()|fmt_amount(a.kind) }} remaining, below the {{ a.item.low_stock_threshold_g if a.kind == 'filament' else a.item.low_stock_threshold|fmt_units }} threshold</div>
+        </div>
+        {% endfor %}
+    </details>
+    {% else %}
+    {% for a in alerts %}
+    <div class="banner banner-warning">
+        <strong>Low stock: {{ a.item.banner_name if a.kind == 'filament' else a.item.name }}</strong>
+        <div class="banner-sub">{{ a.item.get_stock()|fmt_amount(a.kind) }} remaining, below the {{ a.item.low_stock_threshold_g if a.kind == 'filament' else a.item.low_stock_threshold|fmt_units }} threshold</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endif %}

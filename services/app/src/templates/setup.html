@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Setup | FOMS{% endblock %}
+{% block heading %}Setup{% endblock %}
+{% block content %}
+{% if error %}<div class="banner banner-danger" role="alert">{{ error }}</div>{% endif %}
+<form method="post" class="form" action="/setup">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <label for="username" class="required">Username *</label>
+    <input id="username" name="username" required/>
+    {% if errors.get("Username") %}<div class="field-error" role="alert">{{ errors["Username"] }}</div>{% endif %}
+    <label for="password" class="required">Password *</label>
+    <input id="password" name="password" type="password" required/>
+    {% if errors.get("Password") %}<div class="field-error" role="alert">{{ errors["Password"] }}</div>{% endif %}
+    <label for="confirm" class="required">Confirm password *</label>
+    <input id="confirm" name="confirm" type="password" required/>
+    {% if errors.get("Confirm password") %}<div class="field-error" role="alert">{{ errors["Confirm password"] }}</div>{% endif %}
+    <button type="submit" class="primary">Create account</button>
+</form>
+{% endblock %}

@@ -7,6 +7,7 @@ services:
     environment:
       UV_CACHE_DIR: null
       FLASK_RUN_HOST: null
+      FOMS_SECRET: ${FOMS_SECRET}
     networks:
       v0:
         ipv4_address: ${FOMS_IP}
@@ -18,7 +19,32 @@ services:
     command: >
       bash -c "
       ./init.sh &&
-      exec uv run gunicorn --bind 0.0.0.0:5000 --workers 3 --chdir src 'server:app'
+      exec uv run gunicorn --bind 0.0.0.0:5000 --workers 3 'src.server:app'
+      "
+
+  scheduler:
+    build:
+      context: ./services/app
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      UV_CACHE_DIR: null
+      PG_IP: ${PG_IP}
+      PG_PORT: ${PG_PORT}
+      PG_DB: ${PG_DB}
+      PG_UN: ${PG_UN}
+      PG_PW: ${PG_PW}
+      FOMS_SECRET: ${FOMS_SECRET}
+    networks:
+      - v0
+    depends_on:
+      postgres:
+        condition: service_healthy
+    init: true
+    command: >
+      bash -c "
+      ./init.sh &&
+      exec uv run python -m src.scheduler
       "
 
   nginx:
