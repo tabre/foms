@@ -56,6 +56,22 @@
     --border: rgba(255,255,255,0.10);
     --border-strong: rgba(255,255,255,0.20);
     --border-stronger: rgba(255,255,255,0.40);
+
+    --bg-accent: #10233a;
+    --text-accent: #7ab2e8;
+    --border-accent: #2b5f92;
+
+    --bg-danger: #33191a;
+    --text-danger: #e58787;
+    --border-danger: #7a3637;
+
+    --bg-success: #172611;
+    --text-success: #8fb957;
+    --border-success: #3d5c22;
+
+    --bg-warning: #332410;
+    --text-warning: #d9a95c;
+    --border-warning: #7c5318;
   }
 }
 
@@ -81,6 +97,7 @@ button {
   border-radius: var(--radius);
   padding: 6px 14px;
   font-size: 14px;
+  color: var(--text-primary);
   cursor: pointer;
 }
 button:hover { background: var(--surface-1); }
@@ -96,6 +113,14 @@ input, select, textarea {
   background: var(--surface-2);
   color: var(--text-primary);
 }
+
+a { color: var(--text-accent); }
+a.button { display: inline-block; padding: 6px 14px; border: 0.5px solid var(--border-strong);
+  border-radius: var(--radius); background: var(--surface-2); color: var(--text-primary);
+  text-decoration: none; font-size: 14px; }
+a.button:hover { background: var(--surface-1); }
+
+mark { background: var(--bg-accent); color: var(--text-accent); border-radius: 3px; padding: 0 2px; }
 
 .ti { font-family: "tabler-icons" !important; }
 
