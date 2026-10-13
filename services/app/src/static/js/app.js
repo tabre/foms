@@ -3,7 +3,7 @@
 function localizeTimestamps(root) {
   root.querySelectorAll("time.local").forEach((el) => {
     const d = new Date(el.getAttribute("datetime"));
-    if (!Number.isNaN(d.getTime())) el.textContent = el.toLocaleString();
+    if (!Number.isNaN(d.getTime())) el.textContent = d.toLocaleString();
   });
 }
 document.addEventListener("DOMContentLoaded", () => localizeTimestamps(document));
