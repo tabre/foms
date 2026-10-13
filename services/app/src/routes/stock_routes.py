@@ -110,7 +110,9 @@ def edit_filament(item_id: int):
     cleaned, errs = filament_controller.validate_edit(request.form)
     if errs:
         f = g.db_session.get(filament_controller.Filament, item_id)
-        return render_template("fragments/edit_filament_form.html", f=f, error=error_dict(errs).get("Type") or error_dict(errs).get("Color"))
+        d = error_dict(errs)
+        return render_template("fragments/edit_filament_form.html", f=f,
+                               error=d.get("Type") or d.get("Color") or next(iter(d.values()), None))
     f, err = filament_controller.edit(g.db_session, item_id, cleaned)
     if err:
         f = g.db_session.get(filament_controller.Filament, item_id)
@@ -124,7 +126,8 @@ def edit_product(item_id: int):
     if errs:
         p = g.db_session.get(product_controller.Product, item_id)
         d = error_dict(errs)
-        return render_template("fragments/edit_product_form.html", p=p, error=d.get("Name") or d.get("Weight per unit (g)"))
+        return render_template("fragments/edit_product_form.html", p=p,
+                               error=d.get("Name") or d.get("Weight per unit (g)") or next(iter(d.values()), None))
     p, err = product_controller.edit(g.db_session, item_id, cleaned)
     if err:
         p = g.db_session.get(product_controller.Product, item_id)

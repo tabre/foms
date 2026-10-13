@@ -54,11 +54,12 @@ button.primary { background: var(--bg-accent); border-color: var(--border-accent
 .combo-list { list-style: none; margin: 0; padding: 0; border: 0.5px solid var(--border-strong);
   border-radius: var(--radius); background: var(--surface-2); max-height: 320px; overflow: auto; }
 .combo-list[hidden] { display: none; }
-.combo-list li { padding: var(--pad-sm); min-height: 36px; cursor: pointer; }
+.combo-list li { padding: var(--pad-sm); min-height: 36px; cursor: pointer; display: flex; align-items: center; gap: var(--gap-md); }
+.combo-list li .label { flex: 1; min-width: 0; }
 .combo-list li[aria-selected="true"] { background: var(--bg-accent); color: var(--text-accent); }
 .combo-list li mark { font-weight: 700; text-decoration: underline; }
 .combo-list li[aria-selected="true"] mark { background: transparent; color: inherit; }
-.combo-list li .detail { color: var(--text-secondary); font-size: 13px; }
+.combo-list li .detail { flex: none; text-align: right; color: var(--text-secondary); font-size: 13px; }
 .combo-list li .detail .pill { font-size: 12px; }
 .combo-list li.state-low .detail { color: var(--text-warning); }
 .combo-list li.state-empty .detail { color: var(--text-danger); }

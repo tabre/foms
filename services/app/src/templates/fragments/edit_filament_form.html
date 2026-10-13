@@ -1,7 +1,7 @@
 {% import "macros.html" as macros %}
 <tr class="row" id="row-f-{{ f.id }}">
     <td colspan="4">
-        <form class="inline-form" method="post" action="/filaments/{{ f.id }}" hx-target="#row-f-{{ f.id }}" hx-swap="outerHTML">
+        <form class="inline-form" method="post" action="/filaments/{{ f.id }}" hx-post="/filaments/{{ f.id }}" hx-target="#row-f-{{ f.id }}" hx-swap="outerHTML">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <label for="etype-{{ f.id }}">Type</label>
             <input id="etype-{{ f.id }}" name="type" maxlength="40" value="{{ f.type }}" required/>

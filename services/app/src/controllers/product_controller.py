@@ -30,7 +30,17 @@ def validate_add(form: dict):
 
 
 def validate_edit(form: dict):
-    return validate_add(form)
+    """The edit form carries descriptive fields and the threshold only; stock
+    changes only through the adjust operation, so it is not required here."""
+    errors = []
+    name, errs = V.clean_text(form.get("name"), "Name", True, 80)
+    errors += errs
+    weight, errs = V.parse_number(form.get("weight"), "Weight per unit (g)", True, min_value=Decimal("0.1"))
+    errors += errs
+    threshold, errs = V.parse_number(form.get("threshold"), "Low-stock threshold (units)", True, whole=True)
+    errors += errs
+    return {"name": name, "filament_id": form.get("filament_id"), "weight": weight,
+            "threshold": threshold}, errors
 
 
 def add(session, cleaned):

@@ -91,6 +91,7 @@ function initCombobox(input) {
 
   function markLabel(label) {
     const span = document.createElement("span");
+    span.className = "label";
     if (!query) { span.textContent = label; return span; }
     const at = label.toLowerCase().indexOf(query.toLowerCase());
     if (at < 0) { span.textContent = label; return span; }
@@ -278,4 +279,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 document.addEventListener("htmx:afterSwap", (e) => {
   e.target.querySelectorAll(".combo-input").forEach(initCombobox);
+});
+/* HTMX 4 fires colon-separated event names; without this, comboboxes in
+   swapped-in fragments (e.g. the product edit form) never initialize. */
+document.addEventListener("htmx:after:swap", (e) => {
+  const root = e.detail?.ctx?.target ?? e.target;
+  root.querySelectorAll?.(".combo-input").forEach(initCombobox);
 });

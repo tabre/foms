@@ -45,7 +45,20 @@ def validate_add(form: dict):
 
 
 def validate_edit(form: dict):
-    return validate_add(form)
+    """The edit form carries descriptive fields and the threshold only; brand
+    and weight are not editable, so they are not required here."""
+    errors = []
+    type_, errs = V.clean_text(form.get("type"), "Type", True, 40)
+    errors += errs
+    color, errs = V.clean_text(form.get("color"), "Color", True, 40)
+    errors += errs
+    modifier, errs = V.clean_text(form.get("modifier"), "Modifier", False, 40)
+    errors += errs
+    threshold, errs = V.parse_number(form.get("threshold"), "Low-stock threshold (g)", True)
+    errors += errs
+    cleaned = {"type": type_, "modifier": modifier, "color": color,
+               "threshold": threshold}
+    return cleaned, errors
 
 
 def _duplicate(session, cleaned, exclude_id=None) -> bool:
@@ -81,9 +94,9 @@ def edit(session, filament_id, cleaned):
     f = session.get(Filament, filament_id)
     if f is None:
         return None, E.missing_reference("filament")
-    if _duplicate(session, cleaned, exclude_id=filament_id):
+    if _duplicate(session, {**cleaned, "brand": f.brand}, exclude_id=filament_id):
         return None, E.filament_exists()
-    f.brand, f.type, f.modifier, f.color = cleaned["brand"], cleaned["type"], cleaned["modifier"], cleaned["color"]
+    f.type, f.modifier, f.color = cleaned["type"], cleaned["modifier"], cleaned["color"]
     f.low_stock_threshold_g = cleaned["threshold"]
     f.updated_at = utcnow()
     session.commit()

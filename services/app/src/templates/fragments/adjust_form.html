@@ -1,7 +1,7 @@
 <tr class="row" id="row-{{ prefix }}-{{ id }}">
     <td>{{ name }}</td>
     <td colspan="3">
-        <form class="inline-form" method="post" action="/{{ kind }}s/{{ id }}/adjust" hx-target="#row-{{ prefix }}-{{ id }}" hx-swap="outerHTML">
+        <form class="inline-form" method="post" action="/{{ kind }}s/{{ id }}/adjust" hx-post="/{{ kind }}s/{{ id }}/adjust" hx-target="#row-{{ prefix }}-{{ id }}" hx-swap="outerHTML">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <label for="dir-{{ prefix }}-{{ id }}">Direction</label>
             <select id="dir-{{ prefix }}-{{ id }}" name="direction">
