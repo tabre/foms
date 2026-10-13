@@ -52,3 +52,7 @@ services/app/src/static/js/htmx.min.js
 
 # Custom scripts
 vim
+oc.sh
+
+# Misc
+spec.md
