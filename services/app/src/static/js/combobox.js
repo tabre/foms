@@ -32,6 +32,7 @@ function initCombobox(input) {
   let query = "";
   let pageSize = 50;
   let lastValid = { value: hidden.value || input.dataset.value || "", label: input.value || "" };
+  let pending = false;
 
   hidden.value = input.dataset.value || "";
   list.hidden = true;
@@ -175,6 +176,7 @@ function initCombobox(input) {
 
   function select(item) {
     record(item.value, item.label);
+    pending = false;
     close();
     announce(`Selected ${item.label}`);
     if (item.prefill) applyPrefill(item.prefill);
@@ -216,8 +218,16 @@ function initCombobox(input) {
     }
   }
 
+  /* Clicking a row must not move focus out of the input. Without this, blur fires
+     before click, the typed value is reverted, and the selection is lost. */
+  list.addEventListener("pointerdown", (e) => {
+    if (e.target.closest("li[role=option]")) pending = true;
+  });
+  list.addEventListener("mousedown", (e) => e.preventDefault());
+
   input.addEventListener("input", () => {
     selected = false;
+    pending = false;
     open();
     clearTimeout(timer);
     timer = setTimeout(() => fetchOptions(input.value), DEBOUNCE_MS);
@@ -249,10 +259,11 @@ function initCombobox(input) {
   /* Valid values only: free text that was never chosen through the list reverts to
      the previous valid selection (or empty). */
   input.addEventListener("blur", () => {
-    if (!selected) {
+    if (!selected && !pending) {
       hidden.value = lastValid.value;
       input.value = lastValid.label;
     }
+    pending = false;
     close();
   });
 
