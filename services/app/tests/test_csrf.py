@@ -1,4 +1,6 @@
 """CSRF double-submit cookie: token exposure and validation."""
+from unittest.mock import MagicMock, patch
+
 from flask import g
 
 from src import csrf
@@ -32,8 +34,16 @@ def test_missing_token_is_refused():
 
 
 def test_rendered_page_exposes_the_token_for_htmx():
-    client = app.test_client()
-    html = client.get("/login").get_data(as_text=True)
+    # /login checks for existing users to decide redirect vs render; stub the
+    # data store so this test does not require live PostgreSQL.
+    mock_session = MagicMock()
+    mock_session.execute.return_value.first.return_value = object()
+    mock_cm = MagicMock()
+    mock_cm.__enter__.return_value = mock_session
+    mock_cm.__exit__.return_value = False
+    with patch("src.routes.auth_routes.SessionLocal", return_value=mock_cm):
+        client = app.test_client()
+        html = client.get("/login", follow_redirects=True).get_data(as_text=True)
     token = html.split('name="csrf-token" content="')[1].split('"')[0]
     assert token
     cookie = client.get_cookie("foms_csrf")
